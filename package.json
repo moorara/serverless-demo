@@ -1,0 +1,23 @@
+{
+  "name": "serverless-demo",
+  "version": "0.1.0",
+  "author": "Milad Irannejad",
+  "license": "ISC",
+  "engines": {
+    "node": ">=8.10"
+  },
+  "scripts": {
+    "nsp": "nsp check",
+    "lint": "standard",
+    "test": "NODE_ENV=test istanbul cover _mocha --recursive --reporter=spec test/**/*.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^5.1.1",
+    "nsp": "^3.2.1",
+    "should": "^13.2.1",
+    "sinon": "^4.5.0",
+    "standard": "^11.0.1"
+  }
+}
