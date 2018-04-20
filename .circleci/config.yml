@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/serverless
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - checkout
+      - run:
+          name: Installing Packages
+          command: yarn install
+      - run:
+          name: Checking Node Security
+          command: yarn run nsp
+      - run:
+          name: Linting with Standard.js
+          command: yarn run lint
+      - run:
+          name: Running Unit Tests
+          command: yarn run test
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
