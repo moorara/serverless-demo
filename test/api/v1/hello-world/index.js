@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const should = require('should')
 
-const { handler } = require('../../../api/v1/hello-world')
+const { handler } = require('../../../../api/v1/hello-world')
 
 describe('api/v1/hello-world', () => {
   let event, context

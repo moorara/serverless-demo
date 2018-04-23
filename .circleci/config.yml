@@ -4,6 +4,9 @@ jobs:
     working_directory: ~/serverless
     docker:
       - image: circleci/node:8.11
+    environment:
+      TERRAFORM_VERSION: 0.11.7
+
     steps:
       - checkout
       - run:
@@ -18,6 +21,24 @@ jobs:
       - run:
           name: Running Unit Tests
           command: yarn run test
+      - run:
+          name: Installing Terraform
+          command: |
+            curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+            sudo unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin
+            sudo chmod 755 /usr/local/bin/terraform
+      - run:
+          name: Preparing Terraform
+          command: |
+            echo "access_key = \"$AWS_ACCESS_KEY\"" >  terraform/terraform.tfvars
+            echo "secret_key = \"$AWS_SECRET_KEY\"" >> terraform/terraform.tfvars
+            echo "region     = \"$AWS_REGION\""     >> terraform/terraform.tfvars
+      - run:
+          name: Initializing Terraform
+          command: make init
+      - run:
+          name: Generating Terraform Plan
+          command: make plan
       - store_artifacts:
           path: coverage
           prefix: coverage

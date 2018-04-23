@@ -10,4 +10,5 @@ exports.handler = (event, context, callback) => {
   }
 
   callback(null, res)
+  console.info('hello-world function called.')
 }
