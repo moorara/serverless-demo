@@ -16,7 +16,7 @@ resource "aws_lambda_function" "hello-world" {
 
   environment {
     variables = {
-      TEST_VAR = "config"
+      ENVIRONMENT_VAR = "config"
     }
   }
 

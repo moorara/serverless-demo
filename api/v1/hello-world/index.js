@@ -4,9 +4,9 @@ exports.handler = (event, context, callback) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: {
+    body: JSON.stringify({
       message: 'Hello, World!'
-    }
+    })
   }
 
   callback(null, res)
