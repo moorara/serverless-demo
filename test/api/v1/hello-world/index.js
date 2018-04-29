@@ -15,7 +15,9 @@ describe('api/v1/hello-world', () => {
     handler(event, context, (err, res) => {
       should.not.exist(err)
       res.statusCode.should.equal(200)
-      res.body.message.should.equal('Hello, World!')
+      res.body.should.equal(JSON.stringify({
+        message: 'Hello, World!'
+      }))
     })
   })
 })
