@@ -1,7 +1,8 @@
-output "hello-world_version" {
-  value = "${aws_lambda_function.hello-world.version}"
+output "s3_bucket" {
+  value = "${aws_s3_bucket.primary.bucket}"
 }
 
-output "api-gateway_url" {
+output "api_url" {
   value = "${aws_api_gateway_deployment.serverless.invoke_url}"
 }
+
