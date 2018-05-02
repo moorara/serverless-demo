@@ -6,7 +6,15 @@ variable "secret_key" {
   type = "string"
 }
 
+variable "environment" {
+  type = "string"
+}
+
 variable "region" {
+  type = "string"
+}
+
+variable "domain" {
   type = "string"
 }
 

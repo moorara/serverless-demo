@@ -1,6 +1,6 @@
 data "archive_file" "hello-world" {
   type        = "zip"
-  source_dir  = "${path.module}/../api/v1/hello-world"
+  source_dir  = "${path.module}/../functions/api/v1/hello-world"
   output_path = "${path.module}/../files/hello-world.zip"
 }
 

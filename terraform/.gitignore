@@ -1,0 +1,11 @@
+*.pem
+*.pub
+*.log
+
+*.tfvars
+*.tfstate
+*.tfstate.*
+*.auto.tfvars
+*.tfstate.backup
+*.tfstate.*.backup
+.terraform/
