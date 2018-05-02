@@ -9,18 +9,24 @@ jobs:
 
     steps:
       - checkout
+
+      ## Run checks form functions
       - run:
           name: Installing Packages
-          command: yarn install
+          command: |
+            cd functions
+            yarn install
       - run:
           name: Checking Node Security
-          command: yarn run nsp
+          command: make nsp
       - run:
           name: Linting with Standard.js
-          command: yarn run lint
+          command: make lint
       - run:
           name: Running Unit Tests
-          command: yarn run test
+          command: make test
+
+      ## Run checks form Terraform codes
       - run:
           name: Installing Terraform
           command: |
@@ -30,15 +36,19 @@ jobs:
       - run:
           name: Preparing Terraform
           command: |
-            echo "access_key = \"$AWS_ACCESS_KEY\"" >  terraform/terraform.tfvars
-            echo "secret_key = \"$AWS_SECRET_KEY\"" >> terraform/terraform.tfvars
-            echo "region     = \"$AWS_REGION\""     >> terraform/terraform.tfvars
+            echo "access_key  = \"$AWS_ACCESS_KEY\"" >  terraform/terraform.tfvars
+            echo "secret_key  = \"$AWS_SECRET_KEY\"" >> terraform/terraform.tfvars
+            echo "environment = \"ci\""              >> terraform/terraform.tfvars
+            echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
+            echo "domain      = \"$DOMAIN_NAME\""    >> terraform/terraform.tfvars
       - run:
           name: Initializing Terraform
           command: make init
       - run:
           name: Generating Terraform Plan
           command: make plan
+
+      ## Collect build artifacts
       - store_artifacts:
-          path: coverage
+          path: functions/coverage
           prefix: coverage
