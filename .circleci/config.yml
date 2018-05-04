@@ -17,14 +17,24 @@ jobs:
             cd functions
             yarn install
       - run:
-          name: Checking Node Security
+          name: Node Security
           command: make nsp
       - run:
-          name: Linting with Standard.js
+          name: Linting
           command: make lint
       - run:
-          name: Running Unit Tests
+          name: Unit Tests
           command: make test
+
+      ## Run checks for client application
+      - run:
+          name: Installing Packages
+          command: |
+            cd client
+            yarn install
+      - run:
+          name: Unit Tests
+          command: make test-client
 
       ## Run checks form Terraform codes
       - run:
@@ -34,7 +44,7 @@ jobs:
             sudo unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin
             sudo chmod 755 /usr/local/bin/terraform
       - run:
-          name: Preparing Terraform
+          name: Configuring Terraform
           command: |
             echo "access_key  = \"$AWS_ACCESS_KEY\"" >  terraform/terraform.tfvars
             echo "secret_key  = \"$AWS_SECRET_KEY\"" >> terraform/terraform.tfvars
@@ -42,13 +52,15 @@ jobs:
             echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
             echo "domain      = \"$DOMAIN_NAME\""    >> terraform/terraform.tfvars
       - run:
-          name: Initializing Terraform
-          command: make init
-      - run:
-          name: Generating Terraform Plan
-          command: make plan
+          name: Terraform Plan
+          command: |
+            make init
+            make plan
 
       ## Collect build artifacts
       - store_artifacts:
           path: functions/coverage
-          prefix: coverage
+          prefix: functions/coverage
+      - store_artifacts:
+          path: client/coverage
+          prefix: client/coverage
