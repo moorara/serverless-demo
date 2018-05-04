@@ -19,6 +19,10 @@ test:
 	@ cd functions && \
 	  yarn run test
 
+test-client:
+	@ cd client && \
+	  yarn run test -- --coverage
+
 init:
 	@ cd terraform && \
 	  terraform init
@@ -37,5 +41,5 @@ destroy:
 
 
 .PHONY: clean
-.PHONY: nsp lint test 
+.PHONY: nsp lint test test-client
 .PHONY: init plan apply destroy
