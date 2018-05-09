@@ -48,9 +48,9 @@ jobs:
           command: |
             echo "access_key  = \"$AWS_ACCESS_KEY\"" >  terraform/terraform.tfvars
             echo "secret_key  = \"$AWS_SECRET_KEY\"" >> terraform/terraform.tfvars
-            echo "environment = \"ci\""              >> terraform/terraform.tfvars
-            echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
             echo "domain      = \"$DOMAIN_NAME\""    >> terraform/terraform.tfvars
+            echo "environment = \"$ENV_NAME\""       >> terraform/terraform.tfvars
+            echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
       - run:
           name: Terraform Plan
           command: |

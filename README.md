@@ -6,7 +6,8 @@ This is a simple web application and API server built using serverless architect
 ## Prerequisites
 In your AWS account, you need the following resources in place:
 
-  * A **Route53 hosted zone** for your domain name
+  * A **Route53 Hosted Zone** for your domain name
+  * A **S3 Bucket** with your domain name
 
 ## Deployment
 In `terraform` directory, create a file named `terraform.tfvars` and set the following variables in it.
@@ -14,9 +15,9 @@ In `terraform` directory, create a file named `terraform.tfvars` and set the fol
 ```toml
 access_key   =  "..."
 secret_key   =  "..."
+domain       =  "..."
 environment  =  "..."
 region       =  "..."
-domain       =  "..."
 ```
 
 You can then run the following commands for deploying the serverless application:

@@ -1,9 +1,9 @@
 path := $(shell pwd)
-report_path := $(path)/coverage
 
 
 clean:
-	@ rm -rf files $(report_path)
+	@ rm -rf packages
+	@ rm -rf client/coverage
 	@ rm -rf functions/coverage
 	@ rm -rf terraform/.terraform terraform/terraform.tfstate*
 

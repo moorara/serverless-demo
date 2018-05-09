@@ -1,11 +1,11 @@
 resource "aws_api_gateway_rest_api" "serverless" {
-  name        = "serverless.${var.environment}"
+  name        = "${var.environment}.serverless"
   description = "api gateway for serverless application"
 }
 
 resource "aws_api_gateway_domain_name" "serverless" {
-  domain_name     = "api.${var.domain}"
-  certificate_arn = "${aws_acm_certificate_validation.primary.certificate_arn}"
+  domain_name     = "api.${var.region}.${var.environment}.${var.domain}"
+  certificate_arn = "${aws_acm_certificate_validation.regional.certificate_arn}"
 }
 
 resource "aws_route53_record" "serverless" {
