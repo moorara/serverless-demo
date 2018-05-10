@@ -1,13 +1,13 @@
 data "archive_file" "hello-world" {
   type        = "zip"
   source_dir  = "${path.module}/../functions/api/v1/hello-world"
-  output_path = "${path.module}/../files/hello-world.zip"
+  output_path = "${path.module}/../packages/hello-world.zip"
 }
 
 resource "aws_lambda_function" "hello-world" {
-  function_name    = "hello-world"
+  function_name    = "${var.environment}-hello-world"
   description      = "responds to api/v1/hello-world endpoint"
-  filename         = "${path.module}/../files/hello-world.zip"
+  filename         = "${path.module}/../packages/hello-world.zip"
   source_code_hash = "${data.archive_file.hello-world.output_base64sha256}"
   handler          = "index.handler"
   runtime          = "${var.runtime}"
@@ -21,14 +21,15 @@ resource "aws_lambda_function" "hello-world" {
   }
 
   tags {
-    Endpoint = "api/v1/hello-world"
+    Environment = "${var.environment}"
+    Region      = "${var.region}"
   }
 }
 
 resource "aws_iam_role" "hello-world" {
-  name = "hello-world"
+  name = "${var.environment}-hello-world"
 
-  assume_role_policy = <<EOF
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -44,14 +45,14 @@ resource "aws_iam_role" "hello-world" {
     }
   ]
 }
-EOF
+POLICY
 }
 
 resource "aws_iam_role_policy" "hello-world_cloudwatch" {
   name = "cloudwatch_access"
   role = "${aws_iam_role.hello-world.id}"
 
-  policy = <<EOF
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -66,14 +67,14 @@ resource "aws_iam_role_policy" "hello-world_cloudwatch" {
     }
   ]
 }
-EOF
+POLICY
 }
 
 resource "aws_iam_role_policy" "hello-world_s3" {
   name = "s3_access"
   role = "${aws_iam_role.hello-world.id}"
 
-  policy = <<EOF
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -87,5 +88,5 @@ resource "aws_iam_role_policy" "hello-world_s3" {
     }
   ]
 }
-EOF
+POLICY
 }
