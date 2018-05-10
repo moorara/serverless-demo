@@ -29,7 +29,7 @@ resource "aws_lambda_function" "hello-world" {
 resource "aws_iam_role" "hello-world" {
   name = "${var.environment}-hello-world"
 
-  assume_role_policy = <<EOF
+  assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -45,14 +45,14 @@ resource "aws_iam_role" "hello-world" {
     }
   ]
 }
-EOF
+POLICY
 }
 
 resource "aws_iam_role_policy" "hello-world_cloudwatch" {
   name = "cloudwatch_access"
   role = "${aws_iam_role.hello-world.id}"
 
-  policy = <<EOF
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -67,14 +67,14 @@ resource "aws_iam_role_policy" "hello-world_cloudwatch" {
     }
   ]
 }
-EOF
+POLICY
 }
 
 resource "aws_iam_role_policy" "hello-world_s3" {
   name = "s3_access"
   role = "${aws_iam_role.hello-world.id}"
 
-  policy = <<EOF
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -88,5 +88,5 @@ resource "aws_iam_role_policy" "hello-world_s3" {
     }
   ]
 }
-EOF
+POLICY
 }

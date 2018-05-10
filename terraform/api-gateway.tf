@@ -4,11 +4,11 @@ resource "aws_api_gateway_rest_api" "serverless" {
 }
 
 resource "aws_api_gateway_domain_name" "serverless" {
-  domain_name     = "api.${var.region}.${var.environment}.${var.domain}"
+  domain_name     = "api.${local.regional_domain}"
   certificate_arn = "${aws_acm_certificate_validation.regional.certificate_arn}"
 }
 
-resource "aws_route53_record" "serverless" {
+resource "aws_route53_record" "webapi" {
   zone_id = "${data.aws_route53_zone.primary.id}"
   name    = "${aws_api_gateway_domain_name.serverless.domain_name}"
   type    = "A"

@@ -1,9 +1,9 @@
 resource "aws_acm_certificate" "regional" {
   validation_method = "DNS"
-  domain_name       = "${var.region}.${var.environment}.${var.domain}"
+  domain_name       = "${local.regional_domain}"
 
   subject_alternative_names = [
-    "api.${var.region}.${var.environment}.${var.domain}",
+    "api.${local.regional_domain}",
   ]
 
   tags {
