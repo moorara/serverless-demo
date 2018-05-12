@@ -1,11 +1,11 @@
-output "s3_bucket" {
-  value = "${aws_s3_bucket.primary.bucket}"
+output "bucket" {
+  value = "${aws_s3_bucket.webapp.bucket}"
 }
 
-output "s3_bucket_domain" {
-  value = "${aws_s3_bucket.primary.bucket_domain_name}"
+output "webapp" {
+  value = "${local.regional_domain}"
 }
 
-output "api_gateway_url" {
-  value = "${aws_api_gateway_deployment.serverless.invoke_url}"
+output "webapi" {
+  value = "api.${local.regional_domain}"
 }

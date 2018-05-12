@@ -33,9 +33,9 @@ resource "aws_api_gateway_integration" "root" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id             = "${aws_api_gateway_method.root.resource_id}"
   http_method             = "${aws_api_gateway_method.root.http_method}"
-  integration_http_method = "POST"
-  type                    = "AWS_PROXY"
   uri                     = "${aws_lambda_function.hello-world.invoke_arn}"
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"                                          # This is for invoking Lambda function
 }
 
 ########################################  /v1  ########################################
@@ -54,24 +54,23 @@ resource "aws_api_gateway_resource" "hello-world" {
   path_part   = "hello-world"
 }
 
-resource "aws_api_gateway_method" "hello-world" {
+resource "aws_api_gateway_method" "get_hello-world" {
   rest_api_id   = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id   = "${aws_api_gateway_resource.hello-world.id}"
   http_method   = "GET"
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_integration" "hello-world" {
+resource "aws_api_gateway_integration" "get_hello-world" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id             = "${aws_api_gateway_resource.hello-world.id}"
-  http_method             = "${aws_api_gateway_method.hello-world.http_method}"
-  integration_http_method = "POST"
-  type                    = "AWS_PROXY"
+  http_method             = "${aws_api_gateway_method.get_hello-world.http_method}"
   uri                     = "${aws_lambda_function.hello-world.invoke_arn}"
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"                                                  # This is for invoking Lambda function
 }
 
 resource "aws_lambda_permission" "hello-world" {
-  # AllowExecutionFromAPIGateway
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
@@ -84,7 +83,7 @@ resource "aws_lambda_permission" "hello-world" {
 resource "aws_api_gateway_deployment" "serverless" {
   depends_on = [
     "aws_api_gateway_integration.root",
-    "aws_api_gateway_integration.hello-world",
+    "aws_api_gateway_integration.get_hello-world",
   ]
 
   rest_api_id = "${aws_api_gateway_rest_api.serverless.id}"
