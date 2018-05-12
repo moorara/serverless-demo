@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom'
 
 import Api from './api'
 import App from './components/App'
-import registerServiceWorker from './serviceWorker'
+import registerServiceWorker, { unregister } from './serviceWorker'
 
 Api.getMessage().then(console.log)
 
 ReactDOM.render(<App />, document.getElementById('root'))
-registerServiceWorker()
+unregister()

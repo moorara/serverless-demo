@@ -1,18 +1,18 @@
-data "archive_file" "hello-world" {
+data "archive_file" "message" {
   type        = "zip"
-  source_dir  = "${path.module}/../functions/api/v1/hello-world"
-  output_path = "${path.module}/../packages/hello-world.zip"
+  source_dir  = "${path.module}/../functions/api/v1/message"
+  output_path = "${path.module}/../packages/message.zip"
 }
 
-resource "aws_lambda_function" "hello-world" {
-  function_name    = "${var.environment}-hello-world"
-  description      = "responds to api/v1/hello-world endpoint"
-  filename         = "${path.module}/../packages/hello-world.zip"
-  source_code_hash = "${data.archive_file.hello-world.output_base64sha256}"
+resource "aws_lambda_function" "message" {
+  function_name    = "${var.environment}-message"
+  description      = "responds to api/v1/message endpoint"
+  filename         = "${path.module}/../packages/message.zip"
+  source_code_hash = "${data.archive_file.message.output_base64sha256}"
   handler          = "index.handler"
   runtime          = "${var.runtime}"
   timeout          = 2
-  role             = "${aws_iam_role.hello-world.arn}"
+  role             = "${aws_iam_role.message.arn}"
 
   environment {
     variables = {
@@ -26,8 +26,8 @@ resource "aws_lambda_function" "hello-world" {
   }
 }
 
-resource "aws_iam_role" "hello-world" {
-  name = "${var.environment}-hello-world"
+resource "aws_iam_role" "message" {
+  name = "${var.environment}-message"
 
   assume_role_policy = <<POLICY
 {
@@ -48,9 +48,9 @@ resource "aws_iam_role" "hello-world" {
 POLICY
 }
 
-resource "aws_iam_role_policy" "hello-world_cloudwatch" {
+resource "aws_iam_role_policy" "message_cloudwatch" {
   name = "cloudwatch_access"
-  role = "${aws_iam_role.hello-world.id}"
+  role = "${aws_iam_role.message.id}"
 
   policy = <<POLICY
 {
@@ -70,9 +70,9 @@ resource "aws_iam_role_policy" "hello-world_cloudwatch" {
 POLICY
 }
 
-resource "aws_iam_role_policy" "hello-world_s3" {
+resource "aws_iam_role_policy" "message_s3" {
   name = "s3_access"
-  role = "${aws_iam_role.hello-world.id}"
+  role = "${aws_iam_role.message.id}"
 
   policy = <<POLICY
 {

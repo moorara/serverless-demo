@@ -4,11 +4,11 @@ const baseUrl = `${protocol}//api.${host}/v1`
 export default class Api {
   static async getMessage () {
     try {
-      const response = await fetch(`${baseUrl}/hello-world`)
+      const response = await fetch(`${baseUrl}/message`)
       const body = await response.json()
-      return body.message
+      return body.content
     } catch (err) {
-      console.log('Error getting message', err)
+      console.log('Error getting message.', err)
     }
   }
 }

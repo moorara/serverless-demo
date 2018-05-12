@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 const should = require('should')
 
-const { handler } = require('../../../../api/v1/hello-world')
+const { handler } = require('../../../../api/v1/message')
 
-describe('api/v1/hello-world', () => {
+describe('api/v1/message', () => {
   let event, context
 
   beforeEach(() => {
@@ -11,12 +11,12 @@ describe('api/v1/hello-world', () => {
     context = {}
   })
 
-  it('should send hello-world message', () => {
+  it('should send the message', () => {
     handler(event, context, (err, res) => {
       should.not.exist(err)
       res.statusCode.should.equal(200)
       res.body.should.equal(JSON.stringify({
-        message: 'Hello, World!'
+        content: 'Hello, World!'
       }))
     })
   })
