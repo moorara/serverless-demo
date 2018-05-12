@@ -5,10 +5,10 @@ exports.handler = (event, context, callback) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      message: 'Hello, World!'
+      content: 'Hello, World!'
     })
   }
 
   callback(null, res)
-  console.info('hello-world function called.')
+  console.info('message function called.')
 }

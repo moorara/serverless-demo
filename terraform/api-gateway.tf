@@ -33,9 +33,9 @@ resource "aws_api_gateway_integration" "root" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id             = "${aws_api_gateway_method.root.resource_id}"
   http_method             = "${aws_api_gateway_method.root.http_method}"
-  uri                     = "${aws_lambda_function.hello-world.invoke_arn}"
+  uri                     = "${aws_lambda_function.message.invoke_arn}"
   type                    = "AWS_PROXY"
-  integration_http_method = "POST"                                          # This is for invoking Lambda function
+  integration_http_method = "POST"                                       # This is for invoking Lambda function
 }
 
 ########################################  /v1  ########################################
@@ -46,35 +46,35 @@ resource "aws_api_gateway_resource" "v1" {
   path_part   = "v1"
 }
 
-########################################  /v1/hello-world  ########################################
+########################################  /v1/message  ########################################
 
-resource "aws_api_gateway_resource" "hello-world" {
+resource "aws_api_gateway_resource" "message" {
   rest_api_id = "${aws_api_gateway_rest_api.serverless.id}"
   parent_id   = "${aws_api_gateway_resource.v1.id}"
-  path_part   = "hello-world"
+  path_part   = "message"
 }
 
-resource "aws_api_gateway_method" "get_hello-world" {
+resource "aws_api_gateway_method" "get_message" {
   rest_api_id   = "${aws_api_gateway_rest_api.serverless.id}"
-  resource_id   = "${aws_api_gateway_resource.hello-world.id}"
+  resource_id   = "${aws_api_gateway_resource.message.id}"
   http_method   = "GET"
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_integration" "get_hello-world" {
+resource "aws_api_gateway_integration" "get_message" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
-  resource_id             = "${aws_api_gateway_resource.hello-world.id}"
-  http_method             = "${aws_api_gateway_method.get_hello-world.http_method}"
-  uri                     = "${aws_lambda_function.hello-world.invoke_arn}"
+  resource_id             = "${aws_api_gateway_resource.message.id}"
+  http_method             = "${aws_api_gateway_method.get_message.http_method}"
+  uri                     = "${aws_lambda_function.message.invoke_arn}"
   type                    = "AWS_PROXY"
-  integration_http_method = "POST"                                                  # This is for invoking Lambda function
+  integration_http_method = "POST"                                              # This is for invoking Lambda function
 }
 
-resource "aws_lambda_permission" "hello-world" {
+resource "aws_lambda_permission" "message" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.hello-world.arn}"
+  function_name = "${aws_lambda_function.message.arn}"
   source_arn    = "${aws_api_gateway_deployment.serverless.execution_arn}/*/*"
 }
 
@@ -83,7 +83,7 @@ resource "aws_lambda_permission" "hello-world" {
 resource "aws_api_gateway_deployment" "serverless" {
   depends_on = [
     "aws_api_gateway_integration.root",
-    "aws_api_gateway_integration.get_hello-world",
+    "aws_api_gateway_integration.get_message",
   ]
 
   rest_api_id = "${aws_api_gateway_rest_api.serverless.id}"
