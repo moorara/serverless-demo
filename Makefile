@@ -3,9 +3,11 @@ path := $(shell pwd)
 
 clean:
 	@ rm -rf packages
+	@ rm -rf client/build
 	@ rm -rf client/coverage
 	@ rm -rf functions/coverage
 	@ rm -rf terraform/.terraform terraform/terraform.tfstate*
+
 
 nsp:
 	@ cd functions && \
@@ -22,6 +24,7 @@ test:
 test-client:
 	@ cd client && \
 	  yarn run test -- --coverage
+
 
 init:
 	@ cd terraform && \
@@ -40,6 +43,12 @@ destroy:
 	  terraform destroy
 
 
+webapp:
+	@ rm -rf client/build
+	@ cd client && yarn run build
+
+
 .PHONY: clean
 .PHONY: nsp lint test test-client
 .PHONY: init plan apply destroy
+.PHONY: webapp
