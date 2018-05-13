@@ -61,6 +61,30 @@ resource "aws_api_gateway_method" "get_message" {
   authorization = "NONE"
 }
 
+resource "aws_api_gateway_method" "options_message" {
+  rest_api_id   = "${aws_api_gateway_rest_api.serverless.id}"
+  resource_id   = "${aws_api_gateway_resource.message.id}"
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "options_message" {
+  rest_api_id = "${aws_api_gateway_rest_api.serverless.id}"
+  resource_id = "${aws_api_gateway_resource.message.id}"
+  http_method = "${aws_api_gateway_method.options_message.http_method}"
+  status_code = "200"
+
+  response_models {
+    "application/json" = "Empty"
+  }
+
+  response_parameters {
+    "method.response.header.Access-Control-Allow-Origin"  = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+  }
+}
+
 resource "aws_api_gateway_integration" "get_message" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id             = "${aws_api_gateway_resource.message.id}"
@@ -68,6 +92,30 @@ resource "aws_api_gateway_integration" "get_message" {
   uri                     = "${aws_lambda_function.message.invoke_arn}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"                                              # This is for invoking Lambda function
+}
+
+resource "aws_api_gateway_integration" "options_message" {
+  rest_api_id = "${aws_api_gateway_rest_api.serverless.id}"
+  resource_id = "${aws_api_gateway_resource.message.id}"
+  http_method = "${aws_api_gateway_method.options_message.http_method}"
+  type        = "MOCK"
+}
+
+resource "aws_api_gateway_integration_response" "options_message" {
+  depends_on = [
+    "aws_api_gateway_integration.options_message",
+  ]
+
+  rest_api_id = "${aws_api_gateway_rest_api.serverless.id}"
+  resource_id = "${aws_api_gateway_resource.message.id}"
+  http_method = "${aws_api_gateway_method.options_message.http_method}"
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"  = "'${local.regional_domain}'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,PUT,PATCH,DELETE,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
+  }
 }
 
 resource "aws_lambda_permission" "message" {
@@ -84,6 +132,7 @@ resource "aws_api_gateway_deployment" "serverless" {
   depends_on = [
     "aws_api_gateway_integration.root",
     "aws_api_gateway_integration.get_message",
+    "aws_api_gateway_integration.options_message",
   ]
 
   rest_api_id = "${aws_api_gateway_rest_api.serverless.id}"

@@ -10,4 +10,6 @@ import registerServiceWorker, { unregister } from './serviceWorker'
 Api.getMessage().then(console.log)
 
 ReactDOM.render(<App />, document.getElementById('root'))
+
+// registerServiceWorker()
 unregister()
