@@ -15,10 +15,10 @@
     "serve": "^6.5.6"
   },
   "scripts": {
+    "test": "react-scripts test --env=jsdom",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "serve": "serve -s build",
-    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }
