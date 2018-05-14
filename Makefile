@@ -28,16 +28,16 @@ test-client:
 	  yarn run test -- --coverage
 
 
-validate:
-	cd terraform && \
-	terraform validate
-
 init:
 	@ cd terraform && \
 	  terraform init \
 	    -backend-config="bucket=$(domain)" \
 	    -backend-config="key=$(environment)/terraform.tfstate" \
 	    -backend-config="region=$(region)"
+
+validate:
+	cd terraform && \
+	terraform validate
 
 plan:
 	@ cd terraform && \
@@ -54,4 +54,4 @@ destroy:
 
 .PHONY: clean
 .PHONY: nsp lint test test-client
-.PHONY: validate init plan apply destroy
+.PHONY: init validate plan apply destroy

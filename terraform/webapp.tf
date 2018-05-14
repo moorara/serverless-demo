@@ -63,6 +63,13 @@ resource "aws_cloudfront_distribution" "webapp" {
   default_root_object = "index.html"
   aliases             = ["${local.domain}"]
 
+  # This for serving the single-page app from any path
+  custom_error_response {
+    error_code         = "404"
+    response_code      = "200"
+    response_page_path = "/index.html"
+  }
+
   origin {
     origin_id   = "${aws_s3_bucket.webapp.bucket}"
     domain_name = "${aws_s3_bucket.webapp.bucket_domain_name}"
