@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "webapp" {
-  bucket = "${local.regional_domain}"
+  bucket = "${local.env_domain}"
   region = "${var.region}"
   acl    = "public-read"
 
@@ -21,18 +21,47 @@ resource "aws_s3_bucket" "webapp" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${local.regional_domain}/*"
+      "Resource": "arn:aws:s3:::${local.env_domain}/*"
     }
   ]
 }
 POLICY
 }
 
+# Build client app production bundle
+resource "null_resource" "build_client" {
+  depends_on = [
+    "aws_s3_bucket.webapp",
+  ]
+
+  provisioner "local-exec" {
+    working_dir = "${path.module}/../client"
+    command     = "yarn run build 1> /dev/null"
+  }
+}
+
+# Upload client app bundle to S3 bucket
+resource "null_resource" "upload_client" {
+  depends_on = [
+    "null_resource.build_client",
+  ]
+
+  provisioner "local-exec" {
+    working_dir = "${path.module}/../client/build"
+    command     = "aws s3 sync . s3://${aws_s3_bucket.webapp.bucket}"
+
+    environment {
+      AWS_ACCESS_KEY_ID     = "${var.access_key}"
+      AWS_SECRET_ACCESS_KEY = "${var.secret_key}"
+    }
+  }
+}
+
 resource "aws_cloudfront_distribution" "webapp" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  aliases             = ["${local.regional_domain}"]
+  aliases             = ["${local.domain}"]
 
   origin {
     origin_id   = "${aws_s3_bucket.webapp.bucket}"
@@ -66,7 +95,7 @@ resource "aws_cloudfront_distribution" "webapp" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "${aws_acm_certificate_validation.regional.certificate_arn}"
+    acm_certificate_arn = "${aws_acm_certificate_validation.primary.certificate_arn}"
     ssl_support_method  = "sni-only"
   }
 
@@ -78,41 +107,12 @@ resource "aws_cloudfront_distribution" "webapp" {
 
 resource "aws_route53_record" "webapp" {
   zone_id = "${data.aws_route53_zone.primary.id}"
-  name    = "${local.regional_domain}"
+  name    = "${local.domain}"
   type    = "A"
 
   alias {
     name                   = "${aws_cloudfront_distribution.webapp.domain_name}"
     zone_id                = "${aws_cloudfront_distribution.webapp.hosted_zone_id}"
     evaluate_target_health = true
-  }
-}
-
-# Build client app production bundle
-resource "null_resource" "build_client" {
-  depends_on = [
-    "aws_s3_bucket.webapp",
-  ]
-
-  provisioner "local-exec" {
-    working_dir = "${path.module}/../client"
-    command     = "yarn run build 1> /dev/null"
-  }
-}
-
-# Upload client app bundle to S3 bucket
-resource "null_resource" "upload_client" {
-  depends_on = [
-    "null_resource.build_client",
-  ]
-
-  provisioner "local-exec" {
-    working_dir = "${path.module}/../client/build"
-    command     = "aws s3 sync . s3://${aws_s3_bucket.webapp.bucket}"
-
-    environment {
-      AWS_ACCESS_KEY_ID     = "${var.access_key}"
-      AWS_SECRET_ACCESS_KEY = "${var.secret_key}"
-    }
   }
 }

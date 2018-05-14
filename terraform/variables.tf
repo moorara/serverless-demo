@@ -11,14 +11,21 @@ variable "domain" {
 }
 
 variable "environment" {
-  type = "string"
+  type    = "string"
+  default = "dev"
 }
 
 variable "region" {
-  type = "string"
+  type    = "string"
+  default = "us-east-1"
 }
 
 variable "runtime" {
   type    = "string"
   default = "nodejs8.10"
+}
+
+locals {
+  env_domain = "${var.environment}.${var.domain}"
+  domain     = "${var.environment == "prod" ? var.domain : local.env_domain}"
 }
