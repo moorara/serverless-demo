@@ -1,3 +1,8 @@
+domain := $(shell awk -F= '/domain/ { gsub(/[" ]/, "", $$2); print $$2 }' terraform/terraform.tfvars)
+environment := $(shell awk -F= '/environment/ { gsub(/[" ]/, "", $$2); print $$2 }' terraform/terraform.tfvars)
+region := $(shell awk -F= '/region/ { gsub(/[" ]/, "", $$2); print $$2 }' terraform/terraform.tfvars)
+
+
 clean:
 	@ rm -rf packages
 	@ rm -rf client/build
@@ -23,9 +28,16 @@ test-client:
 	  yarn run test -- --coverage
 
 
+validate:
+	cd terraform && \
+	terraform validate
+
 init:
 	@ cd terraform && \
-	  terraform init
+	  terraform init \
+	    -backend-config="bucket=$(domain)" \
+	    -backend-config="key=$(environment)/terraform.tfstate" \
+	    -backend-config="region=$(region)"
 
 plan:
 	@ cd terraform && \
@@ -42,4 +54,4 @@ destroy:
 
 .PHONY: clean
 .PHONY: nsp lint test test-client
-.PHONY: init plan apply destroy
+.PHONY: validate init plan apply destroy
