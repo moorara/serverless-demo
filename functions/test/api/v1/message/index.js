@@ -9,6 +9,7 @@ describe('api/v1/message', () => {
   beforeEach(() => {
     event = {}
     context = {}
+    process.env.ENVIRONMENT = 'test'
   })
 
   it('should send the message', () => {

@@ -1,42 +1,61 @@
+# The following environment variables need to be set in build environment
+#
+#   AWS_ACCESS_KEY
+#   AWS_SECRET_KEY
+#   AWS_REGION
+#   DOMAIN_NAME
+#   ENV_NAME
+#
+
 version: 2
 jobs:
-  build:
+
+  functions:
     working_directory: ~/serverless
     docker:
-      - image: circleci/node:8.11
-    environment:
-      TERRAFORM_VERSION: 0.11.7
-
+      - image: circleci/node:9.11
     steps:
       - checkout
-
-      ## Run checks form functions
       - run:
           name: Installing Packages
-          command: |
-            cd functions
-            yarn install
+          command: cd functions && yarn install
       - run:
-          name: Node Security
+          name: Checking Security
           command: make nsp
       - run:
-          name: Linting
+          name: Code Linting
           command: make lint
       - run:
-          name: Unit Tests
+          name: Unit Testing
           command: make test
+      - store_artifacts:
+          path: functions/coverage
+          prefix: functions/coverage
 
-      ## Run checks for client application
+  client-app:
+    working_directory: ~/serverless
+    docker:
+      - image: circleci/node:9.11
+    steps:
+      - checkout
       - run:
           name: Installing Packages
-          command: |
-            cd client
-            yarn install
+          command: cd client && yarn install
       - run:
-          name: Unit Tests
+          name: Unit Testing
           command: make test-client
+      - store_artifacts:
+          path: client/coverage
+          prefix: client/coverage
 
-      ## Run checks form Terraform codes
+  terraform-plan:
+    working_directory: ~/serverless
+    docker:
+      - image: circleci/node:9.11
+    environment:
+      TERRAFORM_VERSION: 0.11.7
+    steps:
+      - checkout
       - run:
           name: Installing Terraform
           command: |
@@ -52,15 +71,15 @@ jobs:
             echo "environment = \"$ENV_NAME\""       >> terraform/terraform.tfvars
             echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
       - run:
-          name: Terraform Plan
+          name: Planning Terraform
           command: |
             make init
             make plan
 
-      ## Collect build artifacts
-      - store_artifacts:
-          path: functions/coverage
-          prefix: functions/coverage
-      - store_artifacts:
-          path: client/coverage
-          prefix: client/coverage
+workflows:
+  version: 2
+  test_and_verify:
+    jobs:
+      - functions
+      - client-app
+      - terraform-plan
