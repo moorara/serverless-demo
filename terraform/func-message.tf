@@ -11,12 +11,12 @@ resource "aws_lambda_function" "message" {
   source_code_hash = "${data.archive_file.message.output_base64sha256}"
   handler          = "index.handler"
   runtime          = "${var.runtime}"
-  timeout          = 2
+  timeout          = 4
   role             = "${aws_iam_role.message.arn}"
 
   environment {
     variables = {
-      ENVIRONMENT_VAR = "config"
+      ENVIRONMENT = "${var.environment}"
     }
   }
 

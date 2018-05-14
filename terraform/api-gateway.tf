@@ -4,8 +4,8 @@ resource "aws_api_gateway_rest_api" "serverless" {
 }
 
 resource "aws_api_gateway_domain_name" "serverless" {
-  domain_name     = "api.${local.regional_domain}"
-  certificate_arn = "${aws_acm_certificate_validation.regional.certificate_arn}"
+  domain_name     = "api.${local.domain}"
+  certificate_arn = "${aws_acm_certificate_validation.primary.certificate_arn}"
 }
 
 resource "aws_route53_record" "webapi" {
@@ -22,21 +22,21 @@ resource "aws_route53_record" "webapi" {
 
 ########################################  /  ########################################
 
-resource "aws_api_gateway_method" "root" {
+/* resource "aws_api_gateway_method" "get_root" {
   rest_api_id   = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id   = "${aws_api_gateway_rest_api.serverless.root_resource_id}"
   http_method   = "GET"
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_integration" "root" {
+resource "aws_api_gateway_integration" "get_root" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
-  resource_id             = "${aws_api_gateway_method.root.resource_id}"
-  http_method             = "${aws_api_gateway_method.root.http_method}"
+  resource_id             = "${aws_api_gateway_method.get_root.resource_id}"
+  http_method             = "${aws_api_gateway_method.get_root.http_method}"
   uri                     = "${aws_lambda_function.message.invoke_arn}"
   type                    = "AWS_PROXY"
-  integration_http_method = "POST"                                       # This is for invoking Lambda function
-}
+  integration_http_method = "POST"  # This is for invoking Lambda function
+} */
 
 ########################################  /v1  ########################################
 
@@ -112,7 +112,7 @@ resource "aws_api_gateway_integration_response" "options_message" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"  = "'${local.regional_domain}'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'${local.domain}'"
     "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,PUT,PATCH,DELETE,OPTIONS'"
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
   }
@@ -130,7 +130,7 @@ resource "aws_lambda_permission" "message" {
 
 resource "aws_api_gateway_deployment" "serverless" {
   depends_on = [
-    "aws_api_gateway_integration.root",
+    # "aws_api_gateway_integration.root",
     "aws_api_gateway_integration.get_message",
     "aws_api_gateway_integration.options_message",
   ]

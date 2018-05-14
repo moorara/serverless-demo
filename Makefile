@@ -1,6 +1,3 @@
-path := $(shell pwd)
-
-
 clean:
 	@ rm -rf packages
 	@ rm -rf client/build
@@ -43,12 +40,6 @@ destroy:
 	  terraform destroy
 
 
-webapp:
-	@ rm -rf client/build
-	@ cd client && yarn run build
-
-
 .PHONY: clean
 .PHONY: nsp lint test test-client
 .PHONY: init plan apply destroy
-.PHONY: webapp

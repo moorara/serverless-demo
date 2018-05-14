@@ -11,5 +11,5 @@ exports.handler = (event, context, callback) => {
   }
 
   callback(null, res)
-  console.info('message function called.')
+  console.info(`message function called in ${process.env.ENVIRONMENT}.`)
 }

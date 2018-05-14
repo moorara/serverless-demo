@@ -4,6 +4,11 @@
 This is a simple web application and API server built using serverless architecture.
 
 ## Prerequisites
+In your local development environment, you need the following tools available in your path:
+
+  * Yarn (`yarn`)
+  * AWS CLI (`aws`)
+
 In your AWS account, you need the following resources in place:
 
   * A **Route53 Hosted Zone** for your domain name
