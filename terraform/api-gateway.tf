@@ -33,7 +33,7 @@ resource "aws_api_gateway_integration" "get_root" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id             = "${aws_api_gateway_method.get_root.resource_id}"
   http_method             = "${aws_api_gateway_method.get_root.http_method}"
-  uri                     = "${aws_lambda_function.message.invoke_arn}"
+  uri                     = "${module.func_message.invoke_arn}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"  # This is for invoking Lambda function
 } */
@@ -89,7 +89,7 @@ resource "aws_api_gateway_integration" "get_message" {
   rest_api_id             = "${aws_api_gateway_rest_api.serverless.id}"
   resource_id             = "${aws_api_gateway_resource.message.id}"
   http_method             = "${aws_api_gateway_method.get_message.http_method}"
-  uri                     = "${aws_lambda_function.message.invoke_arn}"
+  uri                     = "${module.func_message.invoke_arn}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"                                              # This is for invoking Lambda function
 }
@@ -122,7 +122,7 @@ resource "aws_lambda_permission" "message" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.message.arn}"
+  function_name = "${module.func_message.arn}"
   source_arn    = "${aws_api_gateway_deployment.serverless.execution_arn}/*/*"
 }
 
@@ -132,6 +132,7 @@ resource "aws_api_gateway_deployment" "serverless" {
   depends_on = [
     # "aws_api_gateway_integration.root",
     "aws_api_gateway_integration.get_message",
+
     "aws_api_gateway_integration.options_message",
   ]
 
