@@ -5,7 +5,7 @@ resource "aws_api_gateway_rest_api" "serverless" {
 
 resource "aws_api_gateway_domain_name" "serverless" {
   domain_name     = "api.${local.domain}"
-  certificate_arn = "${aws_acm_certificate_validation.primary.certificate_arn}"
+  certificate_arn = "${module.certificate.certificate_arn}"
 }
 
 resource "aws_route53_record" "webapi" {

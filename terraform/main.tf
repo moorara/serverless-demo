@@ -11,3 +11,14 @@ provider "aws" {
 data "aws_route53_zone" "primary" {
   name = "${var.domain}."
 }
+
+module "certificate" {
+  source = "./certificate"
+
+  name        = "serverless"
+  environment = "${var.environment}"
+  region      = "${var.region}"
+  root_domain = "${local.domain}"
+  sub_domains = ["api.${local.domain}"]
+  zone_id     = "${data.aws_route53_zone.primary.id}"
+}
