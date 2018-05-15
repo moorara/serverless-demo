@@ -72,9 +72,7 @@ jobs:
             echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
       - run:
           name: Planning Terraform
-          command: |
-            make init
-            make plan
+          command: make init validate plan
 
 workflows:
   version: 2
