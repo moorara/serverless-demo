@@ -29,7 +29,7 @@ resource "aws_lambda_function" "function" {
 resource "aws_iam_role" "function" {
   name = "${var.environment}-${var.name}"
 
-  assume_role_policy = <<POLICY
+  assume_role_policy = <<JSON
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -45,14 +45,14 @@ resource "aws_iam_role" "function" {
     }
   ]
 }
-POLICY
+JSON
 }
 
 resource "aws_iam_role_policy" "cloudwatch" {
   name = "cloudwatch_access"
   role = "${aws_iam_role.function.id}"
 
-  policy = <<POLICY
+  policy = <<JSON
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -67,14 +67,14 @@ resource "aws_iam_role_policy" "cloudwatch" {
     }
   ]
 }
-POLICY
+JSON
 }
 
 resource "aws_iam_role_policy" "s3" {
   name = "s3_access"
   role = "${aws_iam_role.function.id}"
 
-  policy = <<POLICY
+  policy = <<JSON
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -88,5 +88,5 @@ resource "aws_iam_role_policy" "s3" {
     }
   ]
 }
-POLICY
+JSON
 }
