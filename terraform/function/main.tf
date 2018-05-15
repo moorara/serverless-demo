@@ -1,18 +1,18 @@
-data "archive_file" "message" {
+data "archive_file" "function" {
   type        = "zip"
-  source_dir  = "${path.module}/../functions/api/v1/message"
-  output_path = "${path.module}/../packages/message.zip"
+  source_dir  = "${path.root}/../functions/api/v1/${var.name}"
+  output_path = "${path.root}/../packages/${var.name}.zip"
 }
 
-resource "aws_lambda_function" "message" {
-  function_name    = "${var.environment}-message"
-  description      = "responds to api/v1/message endpoint"
-  filename         = "${path.module}/../packages/message.zip"
-  source_code_hash = "${data.archive_file.message.output_base64sha256}"
+resource "aws_lambda_function" "function" {
+  function_name    = "${var.environment}-${var.name}"
+  description      = "responds to api/v1/${var.name} endpoint"
+  filename         = "${data.archive_file.function.output_path}"
+  source_code_hash = "${data.archive_file.function.output_base64sha256}"
   handler          = "index.handler"
   runtime          = "${var.runtime}"
   timeout          = 4
-  role             = "${aws_iam_role.message.arn}"
+  role             = "${aws_iam_role.function.arn}"
 
   environment {
     variables = {
@@ -26,10 +26,10 @@ resource "aws_lambda_function" "message" {
   }
 }
 
-resource "aws_iam_role" "message" {
-  name = "${var.environment}-message"
+resource "aws_iam_role" "function" {
+  name = "${var.environment}-${var.name}"
 
-  assume_role_policy = <<POLICY
+  assume_role_policy = <<JSON
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -45,14 +45,14 @@ resource "aws_iam_role" "message" {
     }
   ]
 }
-POLICY
+JSON
 }
 
-resource "aws_iam_role_policy" "message_cloudwatch" {
+resource "aws_iam_role_policy" "cloudwatch" {
   name = "cloudwatch_access"
-  role = "${aws_iam_role.message.id}"
+  role = "${aws_iam_role.function.id}"
 
-  policy = <<POLICY
+  policy = <<JSON
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -67,14 +67,14 @@ resource "aws_iam_role_policy" "message_cloudwatch" {
     }
   ]
 }
-POLICY
+JSON
 }
 
-resource "aws_iam_role_policy" "message_s3" {
+resource "aws_iam_role_policy" "s3" {
   name = "s3_access"
-  role = "${aws_iam_role.message.id}"
+  role = "${aws_iam_role.function.id}"
 
-  policy = <<POLICY
+  policy = <<JSON
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -88,5 +88,5 @@ resource "aws_iam_role_policy" "message_s3" {
     }
   ]
 }
-POLICY
+JSON
 }
