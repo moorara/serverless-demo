@@ -22,3 +22,11 @@ module "certificate" {
   sub_domains = ["api.${local.domain}"]
   zone_id     = "${data.aws_route53_zone.primary.id}"
 }
+
+module "func_message" {
+  source = "./function"
+
+  name        = "message"
+  environment = "${var.environment}"
+  region      = "${var.region}"
+}
