@@ -14,8 +14,8 @@ class Loading extends Component {
     interval: PropTypes.number
   }
 
-  constructor (props, context) {
-    super(props, context)
+  constructor (props) {
+    super(props)
     this.state = {
       frame: 1
     }

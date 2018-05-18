@@ -11,7 +11,7 @@ const TabItem = ({ to, children }) => (
   <Route exact path={to} children={
     ({ location, match }) => (
       <li className={match ? "is-active" : ""}>
-        <NavLink to={to} activeClassName="is-active">{children}</NavLink>
+        <NavLink to={to} exact activeClassName="is-active">{children}</NavLink>
       </li>
     )
   } />
