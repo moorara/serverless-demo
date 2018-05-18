@@ -1,4 +1,4 @@
-const delay = 200
+const delay = 2000
 
 export default class Api {
   static getMessage () {
