@@ -13,7 +13,7 @@ data "aws_route53_zone" "primary" {
 }
 
 module "certificate" {
-  source = "./certificate"
+  source = "./modules/certificate"
 
   name        = "serverless"
   environment = "${var.environment}"
@@ -24,7 +24,7 @@ module "certificate" {
 }
 
 module "api_gateway" {
-  source = "./api-gateway"
+  source = "./modules/api-gateway"
 
   name            = "${var.environment}-serverless"
   domain          = "api.${local.domain}"
@@ -37,7 +37,7 @@ module "api_gateway" {
 ##################################################  ENDPOINTS  ##################################################
 
 module "func_message" {
-  source = "./function"
+  source = "./modules/function"
 
   name        = "message"
   environment = "${var.environment}"
@@ -45,7 +45,7 @@ module "func_message" {
 }
 
 module "endpoint_message" {
-  source = "./endpoint"
+  source = "./modules/endpoint"
 
   stage_name           = "api"
   resource             = "message"
@@ -60,7 +60,7 @@ module "endpoint_message" {
 ##################################################  WEBSITE  ##################################################
 
 module "webapp" {
-  source = "./static-website"
+  source = "./modules/static-website"
 
   domain          = "${local.domain}"
   environment     = "${var.environment}"
