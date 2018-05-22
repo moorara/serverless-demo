@@ -1,3 +1,7 @@
+data "aws_route53_zone" "primary" {
+  name = "${var.domain}."
+}
+
 resource "aws_api_gateway_rest_api" "main" {
   name        = "${var.name}"
   description = "api gateway for serverless application"
@@ -11,7 +15,7 @@ resource "aws_api_gateway_resource" "v1" {
 
 # This internally creates a CloudFront distribution to route requests
 resource "aws_api_gateway_domain_name" "main" {
-  domain_name     = "${var.domain}"
+  domain_name     = "${var.api_domain}"
   certificate_arn = "${var.certificate_arn}"
 }
 
@@ -23,7 +27,7 @@ resource "aws_api_gateway_base_path_mapping" "main" {
 }
 
 resource "aws_route53_record" "main" {
-  zone_id = "${var.zone_id}"
+  zone_id = "${data.aws_route53_zone.primary.id}"
   name    = "${aws_api_gateway_domain_name.main.domain_name}"
   type    = "A"
 

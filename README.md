@@ -25,12 +25,28 @@ environment  =  "..."
 region       =  "..."
 ```
 
-You can then run the following commands for deploying the serverless application:
+### Infrastructure
 
 ```bash
-make init   # Initializes Terraform project
-make plan   # Generates an execution plan for Terraform
-make apply  # Creates/Updates infrastructure using Terraform
+cd terraform/infrastructure
+make init plan
+make apply
+```
+
+### Scaffold
+
+```bash
+cd terraform/scaffold
+make init plan
+make apply
+```
+
+### Serverless
+
+```bash
+cd terraform/serverless
+make init plan
+make apply
 ```
 
 

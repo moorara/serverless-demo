@@ -1,3 +1,7 @@
+data "aws_route53_zone" "primary" {
+  name = "${var.domain}."
+}
+
 resource "aws_s3_bucket" "main" {
   bucket = "${var.bucket_name}"
   region = "${var.region}"
@@ -32,7 +36,7 @@ resource "aws_cloudfront_distribution" "main" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "${var.index_page}"
-  aliases             = ["${var.domain}"]
+  aliases             = ["${var.app_domain}"]
 
   # This for serving the single-page app from any path
   custom_error_response {
@@ -84,8 +88,8 @@ resource "aws_cloudfront_distribution" "main" {
 }
 
 resource "aws_route53_record" "webapp" {
-  zone_id = "${var.zone_id}"
-  name    = "${var.domain}"
+  zone_id = "${data.aws_route53_zone.primary.id}"
+  name    = "${var.app_domain}"
   type    = "A"
 
   alias {
