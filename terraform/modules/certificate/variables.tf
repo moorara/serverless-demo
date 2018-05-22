@@ -10,19 +10,14 @@ variable "region" {
   type = "string"
 }
 
-variable "root_domain" {
+variable "domain" {
   type = "string"
 }
 
-variable "sub_domains" {
-  type = "list"
-}
-
-variable "zone_id" {
+variable "cert_domain" {
   type = "string"
 }
 
-variable "runtime" {
-  type    = "string"
-  default = "nodejs8.10"
+variable "cert_subdomain" {
+  type = "string"
 }
