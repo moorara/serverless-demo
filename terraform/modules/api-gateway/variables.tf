@@ -6,15 +6,15 @@ variable "domain" {
   type = "string"
 }
 
+variable "api_domain" {
+  type = "string"
+}
+
 variable "stage_name" {
   type = "string"
 }
 
 variable "base_path" {
-  type = "string"
-}
-
-variable "zone_id" {
   type = "string"
 }
 
