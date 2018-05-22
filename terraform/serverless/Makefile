@@ -4,7 +4,7 @@ region = $(shell awk -F= '/region/ { gsub(/[" ]/, "", $$2); print $$2 }' terrafo
 
 
 clean:
-	@ rm -rf .terraform
+	@ rm -rf .terraform packages
 
 terraform.tfvars:
 	@ cp ../terraform.tfvars .

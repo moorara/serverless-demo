@@ -71,8 +71,14 @@ jobs:
             echo "environment = \"$ENV_NAME\""       >> terraform/terraform.tfvars
             echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
       - run:
-          name: Planning Terraform
-          command: make init validate plan
+          name: Infrastructure
+          command: cd terraform/infrastructure && make init validate
+      - run:
+          name: Scaffold
+          command: cd terraform/scaffold && make init validate
+      - run:
+          name: Serverless
+          command: cd terraform/serverless && make init validate
 
 workflows:
   version: 2
