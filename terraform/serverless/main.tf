@@ -60,10 +60,10 @@ module "api_gateway" {
 module "func_message" {
   source = "../modules/function"
 
-  name           = "message"
-  environment    = "${var.environment}"
-  region         = "${var.region}"
-  functions_path = "${local.functions_path}"
+  name        = "message"
+  environment = "${var.environment}"
+  region      = "${var.region}"
+  funcs_path  = "${local.funcs_path}"
 }
 
 module "endpoint_message" {

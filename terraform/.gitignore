@@ -9,5 +9,3 @@
 *.tfstate.backup
 *.tfstate.*.backup
 .terraform/
-
-packages/
