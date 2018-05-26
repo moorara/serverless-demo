@@ -1,7 +1,7 @@
 resource "null_resource" "zip" {
   provisioner "local-exec" {
-    working_dir = "${var.funcs_path}"
-    command     = "node packager ./api/v1/${var.name} ./packages/${var.name}.zip"
+    working_dir = "${var.project_path}"
+    command     = "node packager ./functions/api/v1/${var.name} ./packages/${var.name}.zip"
   }
 }
 
@@ -9,8 +9,8 @@ resource "aws_lambda_function" "function" {
   depends_on = ["null_resource.zip"]
 
   function_name = "${var.environment}-${var.name}"
-  description   = "responds to api/v1/${var.name} endpoint"
-  filename      = "${var.funcs_path}/packages/${var.name}.zip"
+  description   = "responds to v1/${var.name} endpoint"
+  filename      = "${var.project_path}/packages/${var.name}.zip"
   handler       = "index.handler"
   runtime       = "${var.runtime}"
   timeout       = 4

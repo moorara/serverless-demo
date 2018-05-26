@@ -6,8 +6,10 @@ This is a simple web application and API server built using serverless architect
 ## Prerequisites
 In your local development environment, you need the following tools available in your path:
 
-  * Yarn (`yarn`)
-  * AWS CLI (`aws`)
+  * [Yarn](https://yarnpkg.com) (`yarn`)
+  * [AWS CLI](https://aws.amazon.com/cli) (`aws`)
+  * [Terraform](https://www.terraform.io) (`terraform`)
+  * [Serverless Framework](https://serverless.com) (`serverless`)
 
 In your AWS account, you need the following resources in place:
 
@@ -15,6 +17,8 @@ In your AWS account, you need the following resources in place:
   * A **S3 Bucket** with your domain name
 
 ## Deployment
+
+### Terraform
 In `terraform` directory, create a file named `terraform.tfvars` and set the following variables in it.
 
 ```toml
@@ -25,7 +29,7 @@ environment  =  "..."
 region       =  "..."
 ```
 
-### Infrastructure
+#### Infrastructure
 
 ```bash
 cd terraform/infrastructure
@@ -33,7 +37,7 @@ make init plan
 make apply
 ```
 
-### Scaffold
+#### Scaffold
 
 ```bash
 cd terraform/scaffold
@@ -41,13 +45,24 @@ make init plan
 make apply
 ```
 
-### Serverless
+#### Serverless
 
 ```bash
 cd terraform/serverless
 make init plan
 make apply
 ```
+
+### Serverless Framework
+
+#### Options
+
+| Option      | Description                 |
+|-------------|-----------------------------|
+| profile     | aws cli profile to use      |
+| environment | deployment environment name |
+| region      | deployment region           |
+| stage       | api gateway stage name      |
 
 
 [circleci-url]: https://circleci.com/gh/moorara/serverless-demo/tree/master

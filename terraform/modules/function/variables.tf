@@ -10,7 +10,7 @@ variable "region" {
   type = "string"
 }
 
-variable "funcs_path" {
+variable "project_path" {
   type = "string"
 }
 

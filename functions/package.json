@@ -15,7 +15,6 @@
     "lodash": "^4.17.10"
   },
   "devDependencies": {
-    "archiver": "^2.1.1",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "nsp": "^3.2.1",
