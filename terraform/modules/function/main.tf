@@ -1,18 +1,20 @@
-data "archive_file" "function" {
-  type        = "zip"
-  source_dir  = "${var.functions_path}/api/v1/${var.name}"
-  output_path = "${path.root}/packages/${var.name}.zip"
+resource "null_resource" "zip" {
+  provisioner "local-exec" {
+    working_dir = "${var.funcs_path}"
+    command     = "node packager ./api/v1/${var.name} ./packages/${var.name}.zip"
+  }
 }
 
 resource "aws_lambda_function" "function" {
-  function_name    = "${var.environment}-${var.name}"
-  description      = "responds to api/v1/${var.name} endpoint"
-  filename         = "${data.archive_file.function.output_path}"
-  source_code_hash = "${data.archive_file.function.output_base64sha256}"
-  handler          = "index.handler"
-  runtime          = "${var.runtime}"
-  timeout          = 4
-  role             = "${aws_iam_role.function.arn}"
+  depends_on = ["null_resource.zip"]
+
+  function_name = "${var.environment}-${var.name}"
+  description   = "responds to api/v1/${var.name} endpoint"
+  filename      = "${var.funcs_path}/packages/${var.name}.zip"
+  handler       = "index.handler"
+  runtime       = "${var.runtime}"
+  timeout       = 4
+  role          = "${aws_iam_role.function.arn}"
 
   environment {
     variables = {
