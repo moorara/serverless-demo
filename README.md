@@ -53,17 +53,6 @@ make init plan
 make apply
 ```
 
-### Serverless Framework
-
-#### Options
-
-| Option      | Description                 |
-|-------------|-----------------------------|
-| profile     | aws cli profile to use      |
-| environment | deployment environment name |
-| region      | deployment region           |
-| stage       | api gateway stage name      |
-
 
 [circleci-url]: https://circleci.com/gh/moorara/serverless-demo/tree/master
 [circleci-image]: https://circleci.com/gh/moorara/serverless-demo/tree/master.svg?style=shield
