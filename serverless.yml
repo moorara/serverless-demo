@@ -1,0 +1,54 @@
+## By default, Lambda functions have permission to create (Allow logs:CreateLogStream) and write (Allow logs:PutLogEvents) to CloudWatch logs.
+## When VPC configuration is provided the default AWS AWSLambdaVPCAccessExecutionRole will be associated to communicate with your VPC resources.
+## See https://serverless.com/framework/docs/providers/aws/guide/iam
+##
+
+service: serverless
+
+plugins:
+  - serverless-finch
+
+package:
+  individually: true
+  exclude:
+    - ./**
+  include:
+    - functions/node_modules/**
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  profile: ${opt:profile}
+  stage: ${opt:stage}
+  region: ${opt:region}
+  environment:
+    ENVIRONMENT: ${opt:environment}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource:
+        - arn:aws:s3:::*
+
+functions:
+  message:
+    name: ${opt:environment}-message
+    description: responds to v1/message endpoint
+    handler: functions/api/v1/message/index.handler
+    package:
+      include:
+        - functions/api/v1/message/**
+    events:
+      - http:
+          path: v1/message
+          method: get
+          integration: lambda
+          cors: true
+
+custom:
+  client:
+    bucketName: dev.delayediranianapplications.com
+    distributionFolder: client/build
+    indexDocument: index.html
+    errorDocument: error.html
