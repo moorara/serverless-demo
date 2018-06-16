@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders react component with isLoading false 1`] = `
+<section
+  className="hero is-primary is-medium is-bold"
+>
+  <div
+    className="hero-head"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="columns"
+      >
+        <div
+          className="column is-2 is-offset-5"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="hero-body"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="columns"
+      >
+        <div
+          className="column is-1"
+        >
+          <img
+            alt="logo"
+            className="app-logo"
+            src="logo.png"
+          />
+        </div>
+        <div
+          className="column"
+        >
+          <h1
+            className="title"
+          >
+            Serverless Application
+          </h1>
+          <h2
+            className="subtitle"
+          >
+            A React client for consuming serverless API!
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="hero-foot"
+  >
+    <nav
+      className="tabs is-boxed"
+    >
+      <div
+        className="container"
+      >
+        <ul>
+          <li
+            className="is-active"
+          >
+            <a
+              aria-current="page"
+              className="is-active"
+              href="/"
+              onClick={[Function]}
+              style={Object {}}
+            >
+              Home
+            </a>
+          </li>
+          <li
+            className=""
+          >
+            <a
+              aria-current={null}
+              className={undefined}
+              href="/about"
+              onClick={[Function]}
+              style={undefined}
+            >
+              About
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+`;
+
+exports[`Header renders react component with isLoading true 1`] = `
+<section
+  className="hero is-primary is-medium is-bold"
+>
+  <div
+    className="hero-head"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="columns"
+      >
+        <div
+          className="column is-2 is-offset-5"
+        >
+          <div
+            className="dots"
+          >
+            <span>
+              ••
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="hero-body"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="columns"
+      >
+        <div
+          className="column is-1"
+        >
+          <img
+            alt="logo"
+            className="app-logo"
+            src="logo.png"
+          />
+        </div>
+        <div
+          className="column"
+        >
+          <h1
+            className="title"
+          >
+            Serverless Application
+          </h1>
+          <h2
+            className="subtitle"
+          >
+            A React client for consuming serverless API!
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="hero-foot"
+  >
+    <nav
+      className="tabs is-boxed"
+    >
+      <div
+        className="container"
+      >
+        <ul>
+          <li
+            className="is-active"
+          >
+            <a
+              aria-current="page"
+              className="is-active"
+              href="/"
+              onClick={[Function]}
+              style={Object {}}
+            >
+              Home
+            </a>
+          </li>
+          <li
+            className=""
+          >
+            <a
+              aria-current={null}
+              className={undefined}
+              href="/about"
+              onClick={[Function]}
+              style={undefined}
+            >
+              About
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+`;

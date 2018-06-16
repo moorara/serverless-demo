@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home renders react component when api call fails 1`] = `
+<section
+  className="hero is-info is-medium"
+>
+  <div
+    className="hero-body"
+  >
+    <div
+      className="container"
+    >
+      <h1
+        className="title"
+      >
+        Message Panel
+      </h1>
+      <div
+        className="content"
+      >
+        <p>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Home renders react component when api call succeeds 1`] = `
+<section
+  className="hero is-info is-medium"
+>
+  <div
+    className="hero-body"
+  >
+    <div
+      className="container"
+    >
+      <h1
+        className="title"
+      >
+        Message Panel
+      </h1>
+      <div
+        className="content"
+      >
+        <p>
+          Hello, Mock!
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+`;
