@@ -11,27 +11,34 @@ In your local development environment, you need the following tools available in
   * [Terraform](https://www.terraform.io) (`terraform`)
   * [Serverless Framework](https://serverless.com) (`serverless`)
 
-## Deployment
-
-### Terraform
+## Terraform
 You can deploy a fully functional web application with serverless APIs and distributed using [CloudFront](https://aws.amazon.com/cloudfront).
 
-### Serverless Framework
+## Serverless Framework
+You can deploy the serverless APIs and client application using [Serverless](https://serverless.com) framework.
 
-#### Options
+### Options
 
-| Option        | Default | Description                 |
-|---------------|---------|-----------------------------|
-| `profile`     |         | aws cli profile to use      |
-| `environment` |         | deployment environment name |
-| `region`      |         | deployment region           |
-| `stage`       |         | api gateway stage name      |
+| Option        | Default   | Description       |
+|---------------|-----------|-------------------|
+| `profile`     |           | aws cli profile   |
+| `environment` | dev       | environment name  |
+| `region`      | us-east-1 | deployment region |
 
-#### Commands:
+### Commands:
+You can deploy the resources as follows:
 
 ```bash
-serverless deploy --environment dev --region us-east-1
-serverless client deploy --environment dev --region us-east-1
+yarn run client
+serverless deploy --environment <name> --region <region>
+serverless client deploy --environment <name> --region <region>
+```
+
+You can also remove the resources as follows:
+
+```bash
+serverless remove --environment <name> --region <region>
+serverless client remove --environment <name> --region <region>
 ```
 
 
