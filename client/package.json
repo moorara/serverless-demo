@@ -13,7 +13,7 @@
   "devDependencies": {
     "react-scripts": "^1.1.4",
     "react-test-renderer": "^16.4.1",
-    "serve": "^9.0.0"
+    "serve": "^9.1.0"
   },
   "scripts": {
     "test": "react-scripts test --env=jsdom --coverage",
