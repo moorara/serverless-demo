@@ -11,47 +11,10 @@ In your local development environment, you need the following tools available in
   * [Terraform](https://www.terraform.io) (`terraform`)
   * [Serverless Framework](https://serverless.com) (`serverless`)
 
-In your AWS account, you need the following resources in place:
-
-  * A **Route53 Hosted Zone** for your domain name
-  * A **S3 Bucket** with your domain name
-
 ## Deployment
 
 ### Terraform
-In `terraform` directory, create a file named `terraform.tfvars` and set the following variables in it.
-
-```toml
-access_key   =  "..."
-secret_key   =  "..."
-domain       =  "..."
-environment  =  "..."
-region       =  "..."
-```
-
-#### Infrastructure
-
-```bash
-cd terraform/infrastructure
-make init plan
-make apply
-```
-
-#### Scaffold
-
-```bash
-cd terraform/scaffold
-make init plan
-make apply
-```
-
-#### Serverless
-
-```bash
-cd terraform/serverless
-make init plan
-make apply
-```
+You can deploy a fully functional web application with serverless APIs and distributed using [CloudFront](https://aws.amazon.com/cloudfront).
 
 ### Serverless Framework
 
