@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Message renders react component 1`] = `
+<section
+  className="hero is-info is-medium"
+>
+  <div
+    className="hero-body"
+  >
+    <div
+      className="container"
+    >
+      <h1
+        className="title"
+      >
+        Message Panel
+      </h1>
+      <div
+        className="content"
+      >
+        <p />
+      </div>
+    </div>
+  </div>
+</section>
+`;

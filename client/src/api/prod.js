@@ -9,6 +9,7 @@ export default class Api {
       return body.content
     } catch (err) {
       console.log('Error getting message.', err)
+      throw err
     }
   }
 }

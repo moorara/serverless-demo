@@ -13,6 +13,7 @@ const About = () => (
               <li><a href="https://reactjs.org">React</a></li>
               <li><a href="https://aws.amazon.com/lambda">AWS Lambda</a></li>
               <li><a href="https://www.terraform.io">Terraform</a></li>
+              <li><a href="https://serverless.com">Serverless</a></li>
             </ul>
           </div>
         </div>
