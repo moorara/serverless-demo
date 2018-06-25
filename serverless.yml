@@ -8,6 +8,15 @@ service: serverless
 plugins:
   - serverless-finch
 
+custom:
+  environment: ${opt:environment, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  client:
+    bucketName: ${self:custom.environment}.delayediranianapplications.com
+    distributionFolder: client/build
+    indexDocument: index.html
+    errorDocument: error.html
+
 package:
   individually: true
   exclude:
@@ -19,23 +28,31 @@ provider:
   name: aws
   runtime: nodejs8.10
   profile: ${opt:profile}
-  stage: ${opt:stage}
-  region: ${opt:region}
+  region: ${self:custom.region}
+  stage: ${self:custom.environment}
   environment:
-    ENVIRONMENT: ${opt:environment}
+    ENVIRONMENT: ${self:custom.environment}
   iamRoleStatements:
     - Effect: Allow
       Action:
         - s3:GetObject
         - s3:PutObject
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
       Resource:
         - arn:aws:s3:::*
+        - arn:aws:dynamodb:${self:custom.region}:*:*
 
 functions:
   message:
-    name: ${opt:environment}-message
+    name: ${self:custom.environment}-message
     description: responds to v1/message endpoint
     handler: functions/api/v1/message/index.handler
+    timeout: 4
     package:
       include:
         - functions/api/v1/message/**
@@ -43,12 +60,20 @@ functions:
       - http:
           path: v1/message
           method: get
-          integration: lambda
           cors: true
 
-custom:
-  client:
-    bucketName: dev.delayediranianapplications.com
-    distributionFolder: client/build
-    indexDocument: index.html
-    errorDocument: error.html
+resources:
+  Resources:
+    messagesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: messagesTable
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
