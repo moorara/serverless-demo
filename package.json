@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "author": "Milad Irannejad",
   "license": "ISC",
+  "devDependencies": {
+    "archiver": "^2.1.1",
+    "serverless": "^1.27.3",
+    "serverless-finch": "^2.1.2"
+  },
   "scripts": {
     "client": "cd client && yarn run build",
     "deploy": "serverless deploy",
     "remove": "serverless remove",
     "deploy-client": "serverless client deploy",
     "remove-client": "serverless client remove"
-  },
-  "dependencies": {
-    "archiver": "^2.1.1",
-    "serverless": "^1.27.3",
-    "serverless-finch": "^2.1.2"
   }
 }
