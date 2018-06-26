@@ -6,11 +6,6 @@
   "engines": {
     "node": "8.10"
   },
-  "scripts": {
-    "nsp": "nsp check",
-    "lint": "standard",
-    "test": "NODE_ENV=test istanbul cover _mocha --recursive --reporter=spec test/**/*.js"
-  },
   "dependencies": {
     "lodash": "^4.17.10"
   },
@@ -19,7 +14,12 @@
     "mocha": "^5.2.0",
     "nsp": "^3.2.1",
     "should": "^13.2.1",
-    "sinon": "^6.0.0",
+    "sinon": "^6.0.1",
     "standard": "^11.0.1"
+  },
+  "scripts": {
+    "nsp": "nsp check",
+    "lint": "standard",
+    "test": "NODE_ENV=test istanbul cover _mocha --recursive --reporter=spec test/**/*.js"
   }
 }
