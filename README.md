@@ -3,6 +3,10 @@
 # Serverless
 This is a simple web application and API server built using serverless architecture.
 
+## Architecture
+
+![system architecture](./docs/architecture.png)
+
 ## Prerequisites
 In your local development environment, you need the following tools available in your path:
 
