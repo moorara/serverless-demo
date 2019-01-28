@@ -18,19 +18,18 @@ jobs:
       - checkout
       - run:
           name: Installing Packages
-          command: cd functions && yarn install
+          working_directory: functions
+          command: yarn install
       - run:
-          name: Checking Security
-          command: cd functions && yarn run nsp
-      - run:
-          name: Code Linting
-          command: cd functions && yarn run lint
+          name: Linting
+          working_directory: functions
+          command: yarn run lint
       - run:
           name: Unit Testing
-          command: cd functions && yarn run test
+          working_directory: functions
+          command: yarn run test
       - store_artifacts:
           path: functions/coverage
-          prefix: functions/coverage
 
   client-app:
     working_directory: ~/serverless
@@ -40,13 +39,14 @@ jobs:
       - checkout
       - run:
           name: Installing Packages
-          command: cd client && yarn install
+          working_directory: client
+          command: yarn install
       - run:
           name: Unit Testing
-          command: cd client && yarn run test
+          working_directory: client
+          command: yarn run test
       - store_artifacts:
           path: client/coverage
-          prefix: client/coverage
 
   terraform-plan:
     working_directory: ~/serverless
