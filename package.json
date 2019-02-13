@@ -4,9 +4,9 @@
   "author": "Milad Irannejad",
   "license": "ISC",
   "devDependencies": {
-    "archiver": "^3.0.0",
-    "serverless": "^1.36.3",
-    "serverless-finch": "^2.3.2"
+    "archiver": "3.0.0",
+    "serverless": "1.36.3",
+    "serverless-finch": "2.3.2"
   },
   "scripts": {
     "client": "cd client && yarn run build",

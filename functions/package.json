@@ -7,14 +7,14 @@
     "node": "8.10"
   },
   "dependencies": {
-    "lodash": "^4.17.11"
+    "lodash": "4.17.11"
   },
   "devDependencies": {
-    "istanbul": "^0.4.5",
-    "mocha": "^5.2.0",
-    "should": "^13.2.3",
-    "sinon": "^7.2.3",
-    "standard": "^12.0.1"
+    "istanbul": "0.4.5",
+    "mocha": "5.2.0",
+    "should": "13.2.3",
+    "sinon": "7.2.3",
+    "standard": "12.0.1"
   },
   "scripts": {
     "lint": "standard",
