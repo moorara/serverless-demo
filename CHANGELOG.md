@@ -1,6 +1,18 @@
 # Change Log
 
-## [v0.1.0](https://github.com/moorara/serverless-demo/tree/v0.1.0) (2018-06-24)
+## [v0.1.1](https://github.com/moorara/serverless-demo/tree/v0.1.1) (2019-02-14)
+[Full Changelog](https://github.com/moorara/serverless-demo/compare/v0.1.0...v0.1.1)
+
+**Merged pull requests:**
+
+- Disable Renovate [\#56](https://github.com/moorara/serverless-demo/pull/56) ([moorara](https://github.com/moorara))
+- Revert "Configure Renovate" [\#47](https://github.com/moorara/serverless-demo/pull/47) ([moorara](https://github.com/moorara))
+- Update packages [\#44](https://github.com/moorara/serverless-demo/pull/44) ([moorara](https://github.com/moorara))
+- \[DISABLE\] Configure Renovate [\#43](https://github.com/moorara/serverless-demo/pull/43) ([renovate[bot]](https://github.com/apps/renovate))
+- Add architecture diagram [\#42](https://github.com/moorara/serverless-demo/pull/42) ([moorara](https://github.com/moorara))
+- Update repo [\#41](https://github.com/moorara/serverless-demo/pull/41) ([moorara](https://github.com/moorara))
+
+## [v0.1.0](https://github.com/moorara/serverless-demo/tree/v0.1.0) (2018-06-25)
 **Implemented enhancements:**
 
 - Modularize Terraform codes [\#13](https://github.com/moorara/serverless-demo/issues/13)
