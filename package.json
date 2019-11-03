@@ -6,8 +6,8 @@
   "scripts": {
     "client": "cd client && yarn run build",
     "deploy": "serverless deploy",
-    "remove": "serverless remove",
     "deploy-client": "serverless client deploy",
+    "remove": "serverless remove",
     "remove-client": "serverless client remove"
   },
   "devDependencies": {

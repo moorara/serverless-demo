@@ -1,0 +1,65 @@
+name: Main
+on: push
+jobs:
+  functions:
+    name: Functions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Switch Node.js Version
+        run: nmv use 10
+      - name: Installing Packages
+        working-directory: ./functions
+        run: yarn install
+      - name: Running Unit Tests
+        working-directory: ./functions
+        run: yarn run test
+      - name: Uploading Test Reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: test-report
+          path: ./functions/coverage
+  client:
+    name: Client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Installing Packages
+        working-directory: ./client
+        run: yarn install
+      - name: Running Unit Tests
+        working-directory: ./client
+        env:
+          CI: true
+        run: yarn run test
+      - name: Building Client App
+        working-directory: ./client
+        run: yarn run build
+      - name: Uploading Test Reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: test-report
+          path: ./client/coverage
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Configure Terraform
+        shell: bash
+        env:
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          AWS_REGION: us-east-1
+        run: |
+          echo "access_key  = \"$AWS_ACCESS_KEY\"" >  terraform/terraform.tfvars
+          echo "secret_key  = \"$AWS_SECRET_KEY\"" >> terraform/terraform.tfvars
+          echo 'domain      = "example.com"'       >> terraform/terraform.tfvars
+          echo 'environment = "test"'              >> terraform/terraform.tfvars
+          echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
+      - name: Terraform Validate Infrastructure
+        run: cd terraform/infrastructure && make init validate
+      - name: Terraform Validate Scaffold
+        run: cd terraform/scaffold && make init validate
+      - name: Terraform Validate Serverless
+        run: cd terraform/serverless && make init validate
