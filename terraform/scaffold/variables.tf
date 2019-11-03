@@ -1,21 +1,24 @@
+# https://www.terraform.io/docs/configuration/variables.html
+# https://www.terraform.io/docs/configuration/types.html
+
 variable "access_key" {
-  type = "string"
+  type = string
 }
 
 variable "secret_key" {
-  type = "string"
+  type = string
 }
 
 variable "domain" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type    = "string"
+  type    = string
   default = "dev"
 }
 
 variable "region" {
-  type    = "string"
+  type    = string
   default = "us-east-1"
 }

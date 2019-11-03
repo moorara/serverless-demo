@@ -1,40 +1,42 @@
+# https://www.terraform.io/docs/configuration/variables.html
+# https://www.terraform.io/docs/configuration/types.html
+
 variable "domain" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "region" {
-  type = "string"
+  type = string
 }
 
 variable "app_domain" {
-  type = "string"
+  type = string
 }
 
 variable "bucket_name" {
-  type = "string"
+  type = string
 }
 
 variable "certificate_arn" {
-  type = "string"
+  type = string
 }
 
 variable "index_page" {
-  type    = "string"
+  type    = string
   default = "index.html"
 }
 
 variable "error_page" {
-  type    = "string"
+  type    = string
   default = "error.html"
 }
 
 variable "cache" {
-  type = "map"
-
+  type = map(number)
   default = {
     min_ttl     = 0
     default_ttl = 3600
