@@ -6,8 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Switch Node.js Version
-        run: nmv use 10
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
       - name: Installing Packages
         working-directory: ./functions
         run: yarn install
@@ -17,7 +18,7 @@ jobs:
       - name: Uploading Test Reports
         uses: actions/upload-artifact@v1
         with:
-          name: test-report
+          name: functions-coverage
           path: ./functions/coverage
   client:
     name: Client
@@ -38,7 +39,7 @@ jobs:
       - name: Uploading Test Reports
         uses: actions/upload-artifact@v1
         with:
-          name: test-report
+          name: client-coverage
           path: ./client/coverage
   terraform:
     name: Terraform
@@ -47,19 +48,28 @@ jobs:
       - uses: actions/checkout@master
       - name: Configure Terraform
         shell: bash
+        working-directory: ./terraform
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-          AWS_REGION: us-east-1
         run: |
-          echo "access_key  = \"$AWS_ACCESS_KEY\"" >  terraform/terraform.tfvars
-          echo "secret_key  = \"$AWS_SECRET_KEY\"" >> terraform/terraform.tfvars
-          echo 'domain      = "example.com"'       >> terraform/terraform.tfvars
-          echo 'environment = "test"'              >> terraform/terraform.tfvars
-          echo "region      = \"$AWS_REGION\""     >> terraform/terraform.tfvars
-      - name: Terraform Validate Infrastructure
-        run: cd terraform/infrastructure && make init validate
-      - name: Terraform Validate Scaffold
-        run: cd terraform/scaffold && make init validate
-      - name: Terraform Validate Serverless
-        run: cd terraform/serverless && make init validate
+          echo "access_key  = \"$AWS_ACCESS_KEY\"" >  terraform.tfvars
+          echo "secret_key  = \"$AWS_SECRET_KEY\"" >> terraform.tfvars
+          echo 'domain      = "example.com"'       >> terraform.tfvars
+          echo 'environment = "test"'              >> terraform.tfvars
+          echo '"region     = "us-east-1"'         >> terraform.tfvars
+      - name: Validate Infrastructure
+        working-directory: ./terraform/infrastructure
+        run: |
+          terraform init -backend=false
+          terraform validate
+      - name: Validate Scaffold
+        working-directory: ./terraform/scaffold
+        run: |
+          terraform init -backend=false
+          terraform validate
+      - name: Validate Serverless
+        working-directory: ./terraform/serverless
+        run: |
+          terraform init -backend=false
+          terraform validate
