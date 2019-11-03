@@ -1,20 +1,23 @@
+# https://www.terraform.io/docs/configuration/variables.html
+# https://www.terraform.io/docs/configuration/types.html
+
 variable "name" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "region" {
-  type = "string"
+  type = string
 }
 
 variable "project_path" {
-  type = "string"
+  type = string
 }
 
 variable "runtime" {
-  type    = "string"
-  default = "nodejs8.10"
+  type    = string
+  default = "nodejs10.x"
 }

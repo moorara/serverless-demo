@@ -1,23 +1,26 @@
+# https://www.terraform.io/docs/configuration/variables.html
+# https://www.terraform.io/docs/configuration/types.html
+
 variable "name" {
-  type = "string"
+  type = string
 }
 
 variable "domain" {
-  type = "string"
+  type = string
 }
 
 variable "api_domain" {
-  type = "string"
+  type = string
 }
 
 variable "stage_name" {
-  type = "string"
+  type = string
 }
 
 variable "base_path" {
-  type = "string"
+  type = string
 }
 
 variable "certificate_arn" {
-  type = "string"
+  type = string
 }

@@ -4,20 +4,20 @@
   "author": "Milad Irannejad",
   "license": "ISC",
   "engines": {
-    "node": "8.10"
-  },
-  "dependencies": {
-    "lodash": "^4.17.13"
-  },
-  "devDependencies": {
-    "istanbul": "^0.4.5",
-    "mocha": "^5.2.0",
-    "should": "^13.2.3",
-    "sinon": "^7.2.3",
-    "standard": "^12.0.1"
+    "node": "10"
   },
   "scripts": {
     "lint": "standard",
     "test": "NODE_ENV=test istanbul cover _mocha --recursive --reporter=spec test/**/*.js"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^6.2.2",
+    "should": "^13.2.3",
+    "sinon": "^7.5.0",
+    "standard": "^14.3.1"
   }
 }
