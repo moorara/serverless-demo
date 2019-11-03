@@ -1,23 +1,26 @@
+# https://www.terraform.io/docs/configuration/variables.html
+# https://www.terraform.io/docs/configuration/types.html
+
 variable "name" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "region" {
-  type = "string"
+  type = string
 }
 
 variable "domain" {
-  type = "string"
+  type = string
 }
 
 variable "cert_domain" {
-  type = "string"
+  type = string
 }
 
 variable "cert_subdomain" {
-  type = "string"
+  type = string
 }
