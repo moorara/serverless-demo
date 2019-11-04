@@ -1,5 +1,7 @@
+# https://www.terraform.io/docs/configuration/outputs.html
+
 output "webapp" {
-  value = "${local.domain}"
+  value = local.domain
 }
 
 output "webapi" {
