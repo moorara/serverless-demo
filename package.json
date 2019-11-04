@@ -11,8 +11,8 @@
     "remove-client": "serverless client remove"
   },
   "devDependencies": {
-    "archiver": "^3.1.1",
-    "serverless": "^1.56.1",
-    "serverless-finch": "^2.4.3"
+    "archiver": "3.1.1",
+    "serverless": "1.56.1",
+    "serverless-finch": "2.4.3"
   }
 }
