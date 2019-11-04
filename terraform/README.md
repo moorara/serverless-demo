@@ -9,8 +9,8 @@ Using this Terraform project, you can deploy a fully functional application with
 
 In your AWS account, you need the following resources in place:
 
-  - A **Route53 Hosted Zone** for your domain name
-  - A **S3 Bucket** with your domain name
+  - A **Route53 Hosted Zone** for your domain
+  - A **S3 Bucket** for Terraform backend state named as `terraform.<domain_name>`
 
 Create a file named `terraform.tfvars` in `terraform` directory and set the following variables in it.
 
