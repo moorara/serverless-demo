@@ -11,9 +11,9 @@ terraform.tfvars:
 
 init: terraform.tfvars
 	terraform init \
-	  -backend-config="bucket=$(domain)" \
-	  -backend-config="key=$(environment)/terraform/scaffold.tfstate" \
-	  -backend-config="region=$(region)"
+	  -backend-config="bucket=terraform.$(domain)" \
+	  -backend-config="key=$(environment)/scaffold.tfstate" \
+	  -backend-config="region=us-east-1"
 
 validate: terraform.tfvars
 	terraform validate
