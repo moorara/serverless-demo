@@ -3027,10 +3027,10 @@ serverless-finch@2.4.3:
     minimatch "^3.0.4"
     prompt-confirm "^1.2.0"
 
-serverless@1.59.1:
-  version "1.59.1"
-  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.59.1.tgz#467cd23c58ca2fc28f1bf50e5f2a92e3efc4d8c8"
-  integrity sha512-nAJt8ZfjExsaR6UEu731uudRsldOjQgNUfuAn4KSsRF4Pk9+44tcbWAY5MdJlRvys/HOyIPgxxeZnHISKlKvOg==
+serverless@1.59.3:
+  version "1.59.3"
+  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.59.3.tgz#1f4bc9dd24e518a38aaf8b988b23cfe9cedb6649"
+  integrity sha512-IBUqcdIjeB0jUQrt4Yvo+KUbE1oSgjgV/w74eI0ksatMbfPrfh0Y1KlBEUcbSt4lizgk9HNYzutC6B9gvX8VKg==
   dependencies:
     "@serverless/cli" "^1.4.0"
     "@serverless/enterprise-plugin" "^3.2.5"
