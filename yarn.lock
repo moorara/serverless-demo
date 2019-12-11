@@ -3017,10 +3017,10 @@ semver@^6.1.1, semver@^6.2.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
 
-serverless-finch@2.4.3:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/serverless-finch/-/serverless-finch-2.4.3.tgz#8eb0186dd2b7adfa22d12c4783601d2768316fab"
-  integrity sha512-djOntJ3M39B/9DUdtC26kAOChH5HBoIEDxtm3T3xrXXnEOJ0js+AEq9gJwkFqABHu3K2uOd6r4itKnvgpoustQ==
+serverless-finch@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/serverless-finch/-/serverless-finch-2.5.2.tgz#78dd81d20bc3a6b094794f48be88d1f56e1e82c8"
+  integrity sha512-fNxedBed7CL8nK2QJ2oxGgDzxHeChva3nvGmxTHMx9SXX2te6RqHFEX0sG6RNt+4VrteazRYA8/j0vArJem6cw==
   dependencies:
     is_js "^0.9.0"
     mime "^1.2.11"
