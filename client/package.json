@@ -12,16 +12,16 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "bulma": "0.8.1",
-    "font-awesome": "4.7.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-router-dom": "5.1.2"
+    "bulma": "^0.8.1",
+    "font-awesome": "^4.7.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "react-scripts": "3.4.1",
-    "react-test-renderer": "16.13.1",
-    "serve": "11.3.0"
+    "react-scripts": "^3.4.1",
+    "react-test-renderer": "^16.13.1",
+    "serve": "^11.3.0"
   },
   "browserslist": {
     "production": [
