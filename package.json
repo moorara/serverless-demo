@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "archiver": "4.0.1",
-    "serverless": "1.68.0",
+    "serverless": "1.69.0",
     "serverless-finch": "2.5.2"
   }
 }
