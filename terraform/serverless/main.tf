@@ -9,7 +9,7 @@ terraform {
 # https://www.terraform.io/docs/configuration/providers.html#version-provider-versions
 provider "aws" {
   # Equivalent to ">= 2.34.0, < 2.0.0"
-  version    = "~> 2.34"  
+  version    = "~> 3.0"  
   access_key = var.access_key
   secret_key = var.secret_key
   region     = var.region
