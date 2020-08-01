@@ -18,27 +18,25 @@ resource "aws_acm_certificate" "main" {
 
 # https://www.terraform.io/docs/providers/aws/r/route53_record.html
 resource "aws_route53_record" "validation" {
-  zone_id = data.aws_route53_zone.main.id
-  name    = aws_acm_certificate.main.domain_validation_options.0.resource_record_name
-  type    = aws_acm_certificate.main.domain_validation_options.0.resource_record_type
-  ttl     = 60
-  records = [ aws_acm_certificate.main.domain_validation_options.0.resource_record_value ]
-}
+  for_each = {
+    for dvo in aws_acm_certificate.main.domain_validation_options: dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
 
-# https://www.terraform.io/docs/providers/aws/r/route53_record.html
-resource "aws_route53_record" "alt_validation" {
   zone_id = data.aws_route53_zone.main.id
-  name    = aws_acm_certificate.main.domain_validation_options.1.resource_record_name
-  type    = aws_acm_certificate.main.domain_validation_options.1.resource_record_type
+  name    = each.value.name
+  type    = each.value.type
   ttl     = 60
-  records = [ aws_acm_certificate.main.domain_validation_options.1.resource_record_value ]
+  records = [ each.value.record ]
 }
 
 # https://www.terraform.io/docs/providers/aws/r/acm_certificate_validation.html
 resource "aws_acm_certificate_validation" "main" {
   certificate_arn = aws_acm_certificate.main.arn
   validation_record_fqdns = [
-    aws_route53_record.validation.fqdn,
-    aws_route53_record.alt_validation.fqdn,
+    for v in aws_route53_record.validation: v.fqdn
   ]
 }
