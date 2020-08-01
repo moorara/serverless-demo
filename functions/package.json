@@ -11,13 +11,13 @@
     "test": "NODE_ENV=test istanbul cover _mocha --recursive --reporter=spec test/**/*.js"
   },
   "dependencies": {
-    "lodash": "^4.17.19"
+    "lodash": "4.17.19"
   },
   "devDependencies": {
-    "istanbul": "^0.4.5",
-    "mocha": "^8.1.0",
-    "should": "^13.2.3",
-    "sinon": "^9.0.2",
-    "standard": "^14.3.4"
+    "istanbul": "0.4.5",
+    "mocha": "8.1.0",
+    "should": "13.2.3",
+    "sinon": "9.0.2",
+    "standard": "14.3.4"
   }
 }
